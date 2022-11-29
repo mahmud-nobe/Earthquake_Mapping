@@ -61,21 +61,39 @@ function getRadius(mag){
         return 1;
     }
     else {
-        return mag * 3;
+        return mag * 2.5;
     }
 }
 
+const colors = ['peachpuff', 'darksalmon', 'lightcoral', 'red', 'maroon', 'indigo'];
 function getColor(mag){
-    var colors = ['peachpuff', 'darksalmon', 'lightcoral', 'red', 'maroon', 'indigo'];
     if (mag >= 5){
         return colors[5];
     }
     else {
         ind = Math.floor(mag);
-        console.log(mag, ind)
         return colors[ind];
     }
 }
+
+// Legend for magnitudes
+const mag_range = ['0-1', '1-2', '2-3', '3-4', '4-5', '5+']
+
+let legend = L.control({
+    position: "bottomright"
+});
+
+legend.onAdd = function() {
+    let div = L.DomUtil.create("div", "info legend");
+    for (var i=0; i<mag_range.length; i++){
+        div.innerHTML += 
+            "<i style='background: "+ colors[i] +"'></i>" + mag_range[i] + '<br>';
+    }
+    return div;
+};
+
+legend.addTo(map);
+
 
 var earthquakeData = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 
@@ -91,4 +109,15 @@ d3.json(earthquakeData).then( data => {
     }).addTo(earthquakeMap);
 
     earthquakeMap.addTo(map);
+})
+
+map.on('overlayremove', function(eventLayer){
+    if (eventLayer.name === 'Earthquake'){
+        this.removeControl(legend);
+    }
+})
+map.on('overlayadd', function(eventLayer){
+    if (eventLayer.name === 'Earthquake'){
+        legend.addTo(this);
+    }
 })
