@@ -44,7 +44,7 @@ function mapStyle(feature) {
         color: "black",
         weight: 2,
         radius: getRadius(feature.properties.mag),
-        fillColor: 'orange',
+        fillColor: getColor(feature.properties.mag),
         fillOpacity: 1,
         opacity: 0.5
     };
@@ -59,6 +59,18 @@ function getRadius(mag){
     }
 }
 
+function getColor(mag){
+    var colors = ['peachpuff', 'darksalmon', 'lightcoral', 'red', 'maroon', 'indigo'];
+    if (mag >= 5){
+        return colors[5];
+    }
+    else {
+        ind = Math.floor(mag);
+        console.log(mag, ind)
+        return colors[ind];
+    }
+}
+
 var earthquakeData = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 
 d3.json(earthquakeData).then( data => {
@@ -67,7 +79,7 @@ d3.json(earthquakeData).then( data => {
             return L.circleMarker(latlng);
         },
         onEachFeature: function(feature, layer){
-            layer.bindPopup('Magnitude: <b>' + feature.properties.mag + '</b><hr> Place: ' + feature.properties.place);
+            layer.bindPopup('Magnitude: <b>' + feature.properties.mag + '</b><hr> Location: ' + feature.properties.place);
         },
         style: mapStyle
     }).addTo(map);
