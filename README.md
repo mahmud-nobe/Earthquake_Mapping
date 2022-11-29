@@ -9,3 +9,7 @@ I retrieved the earthquake data from USGS website in a GeoJSON format, which inc
 
 #### Approach
 I used D3 library in JS to retrieve informations from the GeoJSON data. I plotted the base and overlay maps and added the interactivity for analyzing earthquake using the JS Leaflet library and Mapbox map.
+
+### Webpage
+![earthquake_map](earthquake_map.gif)
+

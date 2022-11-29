@@ -25,7 +25,7 @@ let dark = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{
 
 
 let map = L.map('mapid', {
-    center: [44,-80],
+    center: [25, 10],
     zoom: 2,
     layers: [streetMap]
 });
