@@ -15,3 +15,5 @@ I used D3 library in JS to retrieve informations from the GeoJSON data. I plotte
 
 https://www.loom.com/share/fbe3277b3bd8434bb1fcb5c514eee7a5
 
+https://github.com/mahmud-nobe/Earthquake_Mapping/blob/main/Earhquake_Mapping.mp4
+
