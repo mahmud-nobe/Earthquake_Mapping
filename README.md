@@ -13,5 +13,5 @@ I used D3 library in JS to retrieve informations from the GeoJSON data. I plotte
 ### Webpage
 ![earthquake_map](earthquake_map.gif)
 
-![High Resolution Video](https://www.loom.com/share/fbe3277b3bd8434bb1fcb5c514eee7a5)
+[High Resolution Video](https://www.loom.com/share/fbe3277b3bd8434bb1fcb5c514eee7a5)
 
