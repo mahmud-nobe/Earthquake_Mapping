@@ -36,7 +36,13 @@ var baseMaps = {
     Dark: dark
 };
 
-L.control.layers(baseMaps).addTo(map);
+var earthquakeMap = new L.LayerGroup()
+
+var OverlayMaps = {
+    Earthquake: earthquakeMap
+}
+
+L.control.layers(baseMaps, OverlayMaps).addTo(map);
 
 
 function mapStyle(feature) {
@@ -82,5 +88,7 @@ d3.json(earthquakeData).then( data => {
             layer.bindPopup('Magnitude: <b>' + feature.properties.mag + '</b><hr> Location: ' + feature.properties.place);
         },
         style: mapStyle
-    }).addTo(map);
+    }).addTo(earthquakeMap);
+
+    earthquakeMap.addTo(map);
 })
