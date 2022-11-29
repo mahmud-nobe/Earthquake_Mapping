@@ -69,10 +69,10 @@ function getRadius(mag){
     }
 }
 
-const colors = ['peachpuff', 'darksalmon', 'lightcoral', 'red', 'maroon', 'indigo'];
+const colors = ['peachpuff', 'darksalmon', 'lightcoral', 'red', 'maroon', 'indigo', 'blue'];
 function getColor(mag){
-    if (mag >= 5){
-        return colors[5];
+    if (mag >= 6){
+        return colors[6];
     }
     else {
         ind = Math.floor(mag);
@@ -81,7 +81,7 @@ function getColor(mag){
 }
 
 // Legend for magnitudes
-const mag_range = ['0-1', '1-2', '2-3', '3-4', '4-5', '5+']
+const mag_range = ['0-1', '1-2', '2-3', '3-4', '4-5', '5-6', '6+'];
 
 let legend = L.control({
     position: "bottomright"
@@ -146,13 +146,11 @@ d3.json(tectonicData).then( data => {
 
 
 // add or remove the legend depending on what overlay is displaying
-map.on('overlayremove', function(eventLayer){
-    if (eventLayer.name === 'Earthquake'){
+map.on('overlayremove overlayadd', function(eventLayer){
+    if (this.hasLayer(earthquakeMap) || this.hasLayer(majorEarthquake) ) {
+        legend.addTo(this);
+    } 
+    else {
         this.removeControl(legend);
     }
-})
-map.on('overlayadd', function(eventLayer){
-    if (eventLayer.name === 'Earthquake'){
-        legend.addTo(this);
-    }
-})
+});
