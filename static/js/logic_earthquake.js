@@ -36,10 +36,14 @@ var baseMaps = {
     Dark: dark
 };
 
-var earthquakeMap = new L.LayerGroup()
+var earthquakeMap = new L.LayerGroup();
+var tectonicPlate = new L.LayerGroup();
+var majorEarthquake = new L.LayerGroup();
 
 var OverlayMaps = {
-    Earthquake: earthquakeMap
+    'Earthquake': earthquakeMap,
+    'Tectonic Plates': tectonicPlate,
+    'Major Earthquake': majorEarthquake
 }
 
 L.control.layers(baseMaps, OverlayMaps).addTo(map);
@@ -94,7 +98,7 @@ legend.onAdd = function() {
 
 legend.addTo(map);
 
-
+// Add Earthquake Map
 var earthquakeData = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 
 d3.json(earthquakeData).then( data => {
@@ -111,6 +115,37 @@ d3.json(earthquakeData).then( data => {
     earthquakeMap.addTo(map);
 })
 
+// use only the major earthquakes
+d3.json(earthquakeData).then( data => {
+    major_data = data.features.filter(obj => obj.properties.mag > 4.5);
+    console.log(major_data);
+    L.geoJson(major_data, {
+        pointToLayer: function(feature, latlng){
+            return L.circleMarker(latlng);
+        },
+        onEachFeature: function(feature, layer){
+            layer.bindPopup('Magnitude: <b>' + feature.properties.mag + '</b><hr> Location: ' + feature.properties.place);
+        },
+        style: mapStyle
+    }).addTo(majorEarthquake);
+
+    majorEarthquake.addTo(map);
+})
+
+// Add Tectonic Plates
+tectonicData = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json"
+
+d3.json(tectonicData).then( data => {
+    L.geoJson(data, {
+        color: 'orange',
+        weight: 2,
+    }).addTo(tectonicPlate);
+
+    tectonicPlate.addTo(map);
+})
+
+
+// add or remove the legend depending on what overlay is displaying
 map.on('overlayremove', function(eventLayer){
     if (eventLayer.name === 'Earthquake'){
         this.removeControl(legend);
