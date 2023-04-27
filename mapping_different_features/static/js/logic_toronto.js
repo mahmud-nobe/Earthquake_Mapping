@@ -47,8 +47,8 @@ d3.json(torontoData).then(function (data){
     }).addTo(map);
 });
 
-var earthquakeData = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
+// var earthquakeData = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 
-d3.json(earthquakeData).then( data => {
-    L.geoJson(data).addTo(map);
-})
+// d3.json(earthquakeData).then( data => {
+//     L.geoJson(data).addTo(map);
+// })
